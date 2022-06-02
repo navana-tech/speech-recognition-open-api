@@ -26,11 +26,7 @@ def start_server():
     # on server start
     app.before_server_start(load_model)
 
-    # on server end
-    app.before_server_stop(unload_model)
-
     app.go_fast(debug=False, workers=2, host='0.0.0.0', access_log=False,auto_reload=True, port=6666)
-
 
 
 @app.route("/upload", methods=['POST'])
