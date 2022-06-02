@@ -24,6 +24,5 @@ torchaudio
 numpy==1.20.0
 GPUtil==1.4.0
 sanic
-cairo
 # soundfile
 # fairseq
