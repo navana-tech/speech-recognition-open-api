@@ -2,7 +2,7 @@ from string import punctuation
 import uuid
 from pathlib import Path
 from sanic.log import logger
-from sanic.response import json
+import json
 import os, torch
 from sanic import  Request, Sanic
 from src.lib.inference_lib import get_results, load_model_and_generator
