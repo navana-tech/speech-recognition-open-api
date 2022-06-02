@@ -5,7 +5,6 @@ from sanic.log import logger
 from sanic.response import json
 import os, torch
 from sanic import  Request, Sanic
-from sanic_cors import CORS
 from src.lib.inference_lib import get_results, load_model_and_generator
 
 from src.model_item import ModelItem
@@ -22,8 +21,6 @@ half = gpu
 
 def create_app():
     """ Function for bootstrapping sanic app. """
-    CORS(app)
-
     # error hanlder
     app.config.FALLBACK_ERROR_FORMAT = "json"
     
