@@ -4,9 +4,11 @@ from pathlib import Path
 from sanic.log import logger
 import os, torch, json, asyncio
 from sanic import  Request, Sanic
-from src.lib.inference_lib import get_results, load_model_and_generator
 
+from src import log_setup, utilities
+from src.lib.inference_lib import load_model_and_generator, get_results
 from src.model_item import ModelItem
+from src.lib.inference_lib import Wav2VecCtc
 
 app = Sanic(__name__)
 config = {}
@@ -122,5 +124,5 @@ def get_gpu_info(gpu):
 if __name__ == '__main__':
     # on server start
     load_model(app)
-    
+
     start_server()
