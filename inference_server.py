@@ -1,6 +1,6 @@
 from string import punctuation
 import uuid
-from cairo import Path
+from pathlib import Path
 from sanic.log import logger
 from sanic.response import json
 import os, torch
