@@ -4,9 +4,10 @@ from pathlib import Path
 
 import torch
 
-from src import log_setup
+from src import log_setup, utilities
 from src.lib.inference_lib import load_model_and_generator, get_results
 from src.model_item import ModelItem
+from src.lib.inference_lib import Wav2VecCtc
 
 LOGGER = log_setup.get_logger(__name__)
 
