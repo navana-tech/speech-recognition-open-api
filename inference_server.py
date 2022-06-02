@@ -43,7 +43,9 @@ def upload_audio(request : Request):
 
         if str(file_parameters['name']).endswith('.wav'):
             uid = str(uuid.uuid4())
-            file_path = f"{config['upload']}/{uid}/{file_parameters['name']}"
+            uuid_dir = f"{config['upload']}/{uid}"
+            os.makedirs(uuid_dir, exist_ok=True)
+            file_path = f"{uuid_dir}/{file_parameters['name']}"
             with open(file_path, 'wb') as f:
                 f.write(file_parameters['body'])
 
