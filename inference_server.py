@@ -2,7 +2,7 @@ from string import punctuation
 import uuid
 from pathlib import Path
 from sanic.log import logger
-import os, torch, json
+import os, torch, json, asyncio
 from sanic import  Request, Sanic
 from src.lib.inference_lib import get_results, load_model_and_generator
 
@@ -18,7 +18,7 @@ decoder_type = "kenlm"
 cuda = gpu
 half = gpu
 
-def create_app():
+def start_server():
     """ Function for bootstrapping sanic app. """
     # error hanlder
     app.config.FALLBACK_ERROR_FORMAT = "json"
@@ -76,7 +76,7 @@ def get_transcript(wav_path : Path, model_item) -> str:
 
     return result
 
-async def load_model(app : Sanic, loop):
+def load_model(app : Sanic, loop):
     model_config_file_path=model_base_path + 'model_dict.json'
     if os.path.exists(model_config_file_path):
         with open(model_config_file_path, 'r') as f:
@@ -114,8 +114,6 @@ async def load_model(app : Sanic, loop):
                 logger.info(f"Loaded {language_code} model with ITN")
 
 
-async def unload_model(app, loop):
-    pass
 
 def get_gpu_info(gpu):
     logger.info(f"*** GPU is enabled: {gpu} ***")
@@ -129,4 +127,4 @@ def get_gpu_info(gpu):
             logger.info(f"GPU {str(gpu)} - {str(torch.cuda.get_device_name(gpu))}")
 
 if __name__ == '__main__':
-    create_app()
+    start_server()
