@@ -2,8 +2,7 @@ from string import punctuation
 import uuid
 from pathlib import Path
 from sanic.log import logger
-import json
-import os, torch
+import os, torch, json
 from sanic import  Request, Sanic
 from src.lib.inference_lib import get_results, load_model_and_generator
 
@@ -87,8 +86,6 @@ async def load_model(app : Sanic, loop):
     
     logger.info(f'configuration from model_dict.json is {model_config}')
     model_items = {}
-    cuda = cuda
-    half = half
     punc_models_dict = {}
     enabled_itn_lang_dict = {}
     get_gpu_info(cuda)
