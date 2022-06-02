@@ -22,9 +22,6 @@ def start_server():
     """ Function for bootstrapping sanic app. """
     # error hanlder
     app.config.FALLBACK_ERROR_FORMAT = "json"
-    
-    # on server start
-    app.before_server_start(load_model)
 
     app.go_fast(debug=False, workers=2, host='0.0.0.0', access_log=False,auto_reload=True, port=6666)
 
@@ -72,7 +69,7 @@ def get_transcript(wav_path : Path, model_item) -> str:
 
     return result
 
-def load_model(app : Sanic, loop):
+def load_model(app : Sanic):
     model_config_file_path=model_base_path + 'model_dict.json'
     if os.path.exists(model_config_file_path):
         with open(model_config_file_path, 'r') as f:
@@ -123,4 +120,7 @@ def get_gpu_info(gpu):
             logger.info(f"GPU {str(gpu)} - {str(torch.cuda.get_device_name(gpu))}")
 
 if __name__ == '__main__':
+    # on server start
+    load_model(app)
+    
     start_server()
