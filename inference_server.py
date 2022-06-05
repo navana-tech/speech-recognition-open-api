@@ -3,7 +3,7 @@ import uuid
 from pathlib import Path
 from sanic.log import logger
 import os, torch, json, asyncio
-from sanic import  Request, Sanic
+from sanic import  Request, Sanic, response
 
 from src import log_setup, utilities
 from src.lib.inference_lib import load_model_and_generator, get_results
@@ -12,7 +12,7 @@ from src.lib.inference_lib import Wav2VecCtc
 
 app = Sanic(__name__)
 config = {}
-config["upload"] = "/opt/speech_recognition_open_api/uploads"
+config["upload"] = "/opt/speech_recognition_open_api"
 
 model_base_path = "/opt/speech_recognition_open_api/deployed_models/"
 gpu = True
@@ -57,7 +57,7 @@ def upload_audio(request : Request):
         
         return json({ "received": False, "file_name": file_parameters['name'], "success": False, "status": "invalid file uploaded" })
     except Exception as e:
-        return json({"error": "bad_request", "log": str(e)}, status=403)
+        return response.json({"error": "bad_request", "log": str(e)}, status=403)
 
 
 
