@@ -5,9 +5,12 @@ from sanic.log import logger
 import os, torch, json, asyncio
 from sanic import  Request, Sanic, response
 
-from src import log_setup, utilities
 from src.lib.inference_lib import load_model_and_generator, get_results
 from src.model_item import ModelItem
+
+# for some reaason even thou they are not used, removing
+# them will break the model
+from src import log_setup, utilities
 from src.lib.inference_lib import Wav2VecCtc
 
 app = Sanic(__name__)
@@ -53,9 +56,9 @@ def upload_audio(request : Request):
             model_item = request.app.config.MODEL_ITEM
             res = get_transcript(Path(file_path), model_item)
 
-            return json({ "transcription": res, "file_name": file_parameters['name'], "success": True })
+            return response.json({ "transcription": res, "file_name": file_parameters['name'], "success": True })
         
-        return json({ "received": False, "file_name": file_parameters['name'], "success": False, "status": "invalid file uploaded" })
+        return response.json({ "received": False, "file_name": file_parameters['name'], "success": False, "status": "invalid file uploaded" })
     except Exception as e:
         return response.json({"error": "bad_request", "log": str(e)}, status=403)
 
