@@ -53,7 +53,7 @@ def upload_audio(request : Request):
 def get_transcription(path : str) -> str:
     payload={}
     files=[
-        ('audio',('input_audio.wav',open(path,'rb'),'audio/wav'))
+        ('audio',('original_audio.wav',open(path,'rb'),'audio/wav'))
     ]
     headers = {}
 
